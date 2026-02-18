@@ -32,6 +32,9 @@
     <br>
     <div>₹{{ $package ->price }} PerNight</div>
 <br>
+   <br>
+    <div>₹{{ $package ->total_amount }} Total</div>
+<br>
     <div>{{ $package  ->duration_days }} Days</div>
 <br>
     <div>{{ $package ->category->name }} Package </div></h4>

@@ -1,6 +1,6 @@
 @include('layout.head')
 
-<div class="card auth-card">
+<div class="cards">
     <div class="card-body p-4">
         <h3 class="text-center mb-3">Create Account</h3>
         <p class="text-center text-muted mb-4">Join WanderBit & explore trips</p>

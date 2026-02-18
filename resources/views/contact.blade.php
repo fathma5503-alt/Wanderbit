@@ -47,7 +47,7 @@
               <textarea name="" class="form-control" id="message" cols="30" rows="5"></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary">Send Message</button>
+            <a href="https://mail.google.com/"><button type="submit" class="btn btn-primary">Send Message</button></a>
           </form>
         </div>
         <div class="col-lg-5 ml-auto">
@@ -77,49 +77,67 @@
 <div class="map">
   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3913.3439966922047!2d75.7864227735378!3d11.236085450550128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba6597206914ea3%3A0xe6e0d7290993e169!2sNV%20Tower%2C%20Kallai%2C%20Kozhikode%2C%20Kerala%20673003!5e0!3m2!1sen!2sin!4v1769677888987!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 </div>
-  <div class="untree_co-section testimonial-section mt-5 bg-white">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-7 text-center">
-          <h2 class="section-title text-center mb-5">Testimonials</h2>
+<div class="untree_co-section testimonial-section mt-5">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-7 text-center">
+					<h2 class="section-title text-center mb-5">Testimonials</h2>
 
-          <div class="owl-single owl-carousel no-nav">
-            <div class="testimonial mx-auto">
-              <figure class="img-wrap">
-                <img src="assets/images/person_2.jpg" alt="Image" class="img-fluid">
-              </figure>
-              <h3 class="name">Adam Aderson</h3>
-              <blockquote>
-                <p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-              </blockquote>
-            </div>
+					<div class="owl-single owl-carousel no-nav">
+						<div class="testimonial mx-auto">
+							<figure class="img-wrap">
+								<img src="assets/images/person_2.jpg" alt="Image" class="img-fluids">
+							</figure>
+							<h3 class="name">Adam Aderson</h3>
+							<blockquote>
+								<p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+							</blockquote>
+						</div>
 
-            <div class="testimonial mx-auto">
-              <figure class="img-wrap">
-                <img src="assets/images/person_3.jpg" alt="Image" class="img-fluid">
-              </figure>
-              <h3 class="name">Lukas Devlin</h3>
-              <blockquote>
-                <p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-              </blockquote>
-            </div>
+						<div class="testimonial mx-auto">
+							<figure class="img-wrap">
+								<img src="assets/images/person_3.jpg" alt="Image" class="img-fluids">
+							</figure>
+							<h3 class="name">Lukas Devlin</h3>
+							<blockquote>
+								<p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+							</blockquote>
+						</div>
 
-            <div class="testimonial mx-auto">
-              <figure class="img-wrap">
-                <img src="assets/images/person_4.jpg" alt="Image" class="img-fluid">
-              </figure>
-              <h3 class="name">Kayla Bryant</h3>
-              <blockquote>
-                <p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-              </blockquote>
-            </div>
+						<div class="testimonial mx-auto">
+							<figure class="img-wrap">
+								<img src="assets/images/person_4.jpg" alt="Image" class="img-fluids">
+							</figure>
+							<h3 class="name">Kayla Bryant</h3>
+							<blockquote>
+								<p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+							</blockquote>
+						</div>
 
-          </div>
+ @foreach($testimonials as $t)
+   <div class="testimonial mx-auto">
+    <figure class="img-wrap">
+     @if($t->image) 
+      <img src="{{ asset('public/storage/'.$t->image) }}"  alt="{{ $t->name }}"class="img-flui">
+       @else
+         <img src="https://ui-avatars.com/api/?name={{ urlencode($t->name) }}&background=0D8ABC&color=fff" alt="{{ $t->name }}" class="img-flui">
+      @endif
+     </figure>
 
-        </div>
-      </div>
-    </div>
-  </div>
+    <h3 class="name">{{ $t->name }}</h3>
+
+     <blockquote>
+       <p>“{{ $t->message }}”</p>
+     </blockquote>
+   </div>
+  @endforeach
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 

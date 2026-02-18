@@ -24,32 +24,15 @@
                                         </option>
                                     @endforeach
                                 </select>
-                            </div>
-
-                            <!-- Date -->
-                            <div class="col-lg-5 mb-2">
-                                <input type="text"
-                                       name="daterange"
-                                       class="form-control"
-                                       value="{{ request('daterange') }}"
-                                       placeholder="Select dates">
-                            </div>
-
-                            <!-- Guests -->
-                            <div class="col-lg-3 mb-2">
-                                <input type="number"
-                                       name="guests"
-                                       class="form-control"
-                                       min="1"
-                                       value="{{ request('guests') }}"
-                                       placeholder="# of People">
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary w-100">
+								 </div>
+                        <button type="submit" class="btn btn-primary w-1000">
                             Search
                         </button>
                     </form>
+                           
+
+                        </div>
+
                     <!-- /SEARCH FORM -->
                 </div>
             </div>
@@ -281,7 +264,7 @@
 						<div class="media-text">
 							 <h3>{{ $p->title }}</h3>
 						</div>
-						<img src="{{ asset('public/storage/' . $p->featured_image) }}" alt="Image" class="img-fluid im">
+						<img src="{{ asset('public/storage/' . $p->featured_image) }}" alt="Image" class="img-fluid im" style="height: 500px">
 					</a> 
 				</div>
    @endforeach
@@ -299,50 +282,7 @@
 	</div>
 
 
-	<div class="untree_co-section testimonial-section mt-5">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-lg-7 text-center">
-					<h2 class="section-title text-center mb-5">Testimonials</h2>
-
-					<div class="owl-single owl-carousel no-nav">
-						<div class="testimonial mx-auto">
-							<figure class="img-wrap">
-								<img src="assets/images/person_2.jpg" alt="Image" class="img-fluid">
-							</figure>
-							<h3 class="name">Adam Aderson</h3>
-							<blockquote>
-								<p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-							</blockquote>
-						</div>
-
-						<div class="testimonial mx-auto">
-							<figure class="img-wrap">
-								<img src="assets/images/person_3.jpg" alt="Image" class="img-fluid">
-							</figure>
-							<h3 class="name">Lukas Devlin</h3>
-							<blockquote>
-								<p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-							</blockquote>
-						</div>
-
-						<div class="testimonial mx-auto">
-							<figure class="img-wrap">
-								<img src="assets/images/person_4.jpg" alt="Image" class="img-fluid">
-							</figure>
-							<h3 class="name">Kayla Bryant</h3>
-							<blockquote>
-								<p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-							</blockquote>
-						</div>
-
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-
+	
 
 	{{-- <div class="untree_co-section">
 		<div class="container">
@@ -444,7 +384,7 @@
 						<a id="play-video" class="video-play-button" href="https://www.youtube.com/watch?v=mwtbEGNABWU" data-fancybox>
 							<span></span>
 						</a>
-						<img src="assets/images/hero-slider-2.jpg" alt="Image" class="img-fluid rounded-20">
+						<img src="assets/images/hero-slider-2.jpg" alt="Image" class="img-flu rounded-20">
 					</figure>
 				</div>
 
@@ -474,9 +414,11 @@
 			</div>
 		</div>
 	</div>
-
-	
-	<h1 class="dis">Destinations</h1>
+<div class="py-5 cta-section">
+		<div class="container">
+			<div class="row text-center">
+				<div class="col-md-12">
+	<h2 class="mb-2 section-title text-white text-center">Destinations</h2>
 	
 <div class="pro d-flex flex-wrap gap-4">
     @forelse($packages as $p)
@@ -494,13 +436,17 @@
         <p class="text-center text-muted w-100">No packages found</p>
     @endforelse
 </div>
+</div>
+			</div>
+		</div>
+	</div>
 	<div class="py-5 cta-section">
 		<div class="container">
 			<div class="row text-center">
 				<div class="col-md-12">
 					<h2 class="mb-2 section-title text-white ">Explore the World in Unmatched Luxury. Contact Us Now</h2>
 					<p class="mb-4 lead">Curated journeys, hand-picked destinations, and unforgettable experiences crafted just for you.</p>
-					<p class="mb-0"><a href="booking.html" class="btn btn-primary btn-sm">Get in touch</a></p>
+					<p class="mb-0"><a href="{{ url('contact') }}" class="btn btn-primary btn-sm">Get in touch</a></p>
 				</div>
 			</div>
 		</div>

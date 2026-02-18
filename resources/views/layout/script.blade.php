@@ -61,17 +61,38 @@ $(document).ready(function () {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+
     const guestsInput = document.getElementById('guests');
     const checkInInput = document.getElementById('check_in_date');
     const checkOutInput = document.getElementById('check_out_date');
     const packagePrice = parseFloat(document.getElementById('packagePrice').textContent);
+const durationDays = {{ isset($package) ? $package->duration_days : 0 }};
+
+    function setCheckoutDate() {
+        if (checkInInput.value) {
+
+            let checkInDate = new Date(checkInInput.value);
+
+            // Add duration days
+            checkInDate.setDate(checkInDate.getDate() + durationDays);
+
+            let year = checkInDate.getFullYear();
+            let month = String(checkInDate.getMonth() + 1).padStart(2, '0');
+            let day = String(checkInDate.getDate()).padStart(2, '0');
+
+            checkOutInput.value = `${year}-${month}-${day}`;
+        }
+    }
 
     function calculateTotal() {
+
         const guests = parseInt(guestsInput.value) || 1;
+
         const checkIn = new Date(checkInInput.value);
         const checkOut = new Date(checkOutInput.value);
-        
+
         let nights = 0;
+
         if (checkInInput.value && checkOutInput.value) {
             nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
             nights = nights > 0 ? nights : 0;
@@ -84,23 +105,16 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('totalPrice').textContent = total.toFixed(2);
     }
 
-    guestsInput.addEventListener('change', calculateTotal);
-    checkInInput.addEventListener('change', calculateTotal);
-    checkOutInput.addEventListener('change', calculateTotal);
-});
-</script>
-<script>
-$(function () {
-    $('#dateRange').daterangepicker({
-        minDate: moment(),
-        autoApply: true,
-        locale: { format: 'YYYY-MM-DD' }
-    }, function(start, end) {
-        $('#checkIn').val(start.format('YYYY-MM-DD'));
-        $('#checkOut').val(end.format('YYYY-MM-DD'));
+    checkInInput.addEventListener('change', function() {
+        setCheckoutDate();
+        calculateTotal();
     });
+
+    guestsInput.addEventListener('input', calculateTotal);
+
 });
 </script>
+
 
 </body>
 

@@ -42,7 +42,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <img src="{{ asset('public/storage/' . $booking->package->featured_image) }}" 
-                                     alt="{{ $booking->package->title }}" class="img-fluid rounded">
+                                     alt="{{ $booking->package->title }}" class="img-fluid roundeds">
                             </div>
                             <div class="col-md-8">
                                 <h6>{{ $booking->package->title }}</h6>
@@ -77,21 +77,21 @@
                         @endif
                     </div>
 
-                    <!-- Price Summary -->
+                             <!-- Price Summary -->
+                    @php
+                        $nights = abs($booking->check_in_date->diffInDays($booking->check_out_date));
+                    @endphp
+
                     <div class="bg-light p-3 rounded mb-3">
-                        <h6 class="mb-3">Price Summary</h6>
-                        @php
-                            $nights = $booking->check_out_date->diffInDays($booking->check_in_date);
-                        @endphp
-                        <div class="row mb-2">
-                            <div class="col-6">Package Price × {{ $booking->guests }} Guests × {{ $nights }} Nights:</div>
-                            <div class="col-6 text-end">₹{{ number_format($booking->total_price, 2) }}</div>
-                        </div>
-                        <hr class="my-2">
-                        <div class="row">
-                            <div class="col-6"><strong>Total Amount:</strong></div>
-                            <div class="col-6 text-end"><strong class="text-success text-lg">₹{{ number_format($booking->total_price, 2) }}</strong></div>
-                        </div>
+                        <h5>Price Summary</h5>
+
+                        <p>
+                            Package Price × {{ $booking->guests }} Guests × {{ $nights }} Nights
+                        </p>
+
+                        <h4 class="text-success">
+                            ₹{{ number_format(abs($booking->total_price), 2) }}
+                        </h4>
                     </div>
 
                     <!-- User Information -->
@@ -141,7 +141,7 @@
 
                             @if($booking->payment_status == 'unpaid')
                                 <button class="btn btn-success ms-auto">
-                                    <i class="fas fa-credit-card"></i> Pay Now
+                                   <a href="https://pay.google.com/"> <i class="fas fa-credit-card"></i> Pay Now</a>
                                 </button>
                             @endif
                         @endif

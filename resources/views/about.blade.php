@@ -97,7 +97,24 @@
             </div>
           </div>
         </div>
+  @foreach($teams as $team)
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="team">
 
+                @if($team->image)
+                    <img src="{{ asset('public/storage/'.$team->image) }}" alt="{{ $team->name }}" class="img-fluid mb-4 rounded-20">
+                @else
+                    <img src="https://ui-avatars.com/api/?name={{ urlencode($team->name) }}&background=1f263e&color=fff" alt="{{ $team->name }}" class="img-fluid mb-4 rounded-20">
+                @endif
+
+                <div class="px-3">
+                    <h3 class="mb-0">{{ $team->name }}</h3>
+                    <p>{{ $team->description }}</p>
+                </div>
+
+            </div>
+        </div>
+    @endforeach
       </div>
 
     </div>
@@ -107,48 +124,66 @@
   
 
   <div class="untree_co-section testimonial-section mt-5">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-7 text-center">
-          <h2 class="section-title text-center mb-5">Testimonials</h2>
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-7 text-center">
+					<h2 class="section-title text-center mb-5">Testimonials</h2>
 
-          <div class="owl-single owl-carousel no-nav">
-            <div class="testimonial mx-auto">
-              <figure class="img-wrap">
-                <img src="assets/images/person_2.jpg" alt="Image" class="img-fluid">
-              </figure>
-              <h3 class="name">Adam Aderson</h3>
-              <blockquote>
-                <p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-              </blockquote>
-            </div>
+					<div class="owl-single owl-carousel no-nav">
+						<div class="testimonial mx-auto">
+							<figure class="img-wrap">
+								<img src="assets/images/person_2.jpg" alt="Image" class="img-fluids">
+							</figure>
+							<h3 class="name">Adam Aderson</h3>
+							<blockquote>
+								<p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+							</blockquote>
+						</div>
 
-            <div class="testimonial mx-auto">
-              <figure class="img-wrap">
-                <img src="assets/images/person_3.jpg" alt="Image" class="img-fluid">
-              </figure>
-              <h3 class="name">Lukas Devlin</h3>
-              <blockquote>
-                <p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-              </blockquote>
-            </div>
+						<div class="testimonial mx-auto">
+							<figure class="img-wrap">
+								<img src="assets/images/person_3.jpg" alt="Image" class="img-fluids">
+							</figure>
+							<h3 class="name">Lukas Devlin</h3>
+							<blockquote>
+								<p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+							</blockquote>
+						</div>
 
-            <div class="testimonial mx-auto">
-              <figure class="img-wrap">
-                <img src="assets/images/person_4.jpg" alt="Image" class="img-fluid">
-              </figure>
-              <h3 class="name">Kayla Bryant</h3>
-              <blockquote>
-                <p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-              </blockquote>
-            </div>
+						<div class="testimonial mx-auto">
+							<figure class="img-wrap">
+								<img src="assets/images/person_4.jpg" alt="Image" class="img-fluids">
+							</figure>
+							<h3 class="name">Kayla Bryant</h3>
+							<blockquote>
+								<p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+							</blockquote>
+						</div>
 
-          </div>
+ @foreach($testimonials as $t)
+   <div class="testimonial mx-auto">
+    <figure class="img-wrap">
+     @if($t->image) 
+      <img src="{{ asset('public/storage/'.$t->image) }}"  alt="{{ $t->name }}"class="img-flui">
+       @else
+         <img src="https://ui-avatars.com/api/?name={{ urlencode($t->name) }}&background=0D8ABC&color=fff" alt="{{ $t->name }}" class="img-flui">
+      @endif
+     </figure>
 
-        </div>
-      </div>
-    </div>
-  </div>
+    <h3 class="name">{{ $t->name }}</h3>
+
+     <blockquote>
+       <p>“{{ $t->message }}”</p>
+     </blockquote>
+   </div>
+  @endforeach
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
 
   <div class="untree_co-section">
     <div class="container">

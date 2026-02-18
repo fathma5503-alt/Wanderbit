@@ -18,6 +18,7 @@
             <th>Title</th>
             <th>Slug</th>
             <th>Price/Night</th>
+            <th>Total</th>
             <th>Duration Days</th>
             <th>Image</th>
             <th>Category</th>
@@ -37,7 +38,10 @@
             </td>    
             <td>
                 {{$p->price}}
-            </td>   
+            </td>  
+            <td>
+                {{$p->total_amount}}
+            </td>  
             <td>
                 {{$p->duration_days}}
             </td> 

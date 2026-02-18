@@ -16,16 +16,55 @@
   </div>
 
   
+{{-- <div class="package-slider owl-carousel owl-theme">
+
+    @forelse($packages as $p)
+        <div class="item">
+            <div class="card package-card">
+
+                <img src="{{ asset('public/storage/' . $p->featured_image) }}"
+                     class="card-img-top"
+                     style="height:220px; object-fit:cover;">
+
+                <div class="card-body text-center">
+                    <h5>{{ $p->title }}</h5>
+
+                    <p class="text-muted mb-1">
+                        {{ $p->category->name ?? 'Uncategorized' }}
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>₹{{ number_format($p->price) }}</strong>
+                    </p>
+
+                    <p class="text-sm">
+                        {{ $p->duration_days }} Days
+                    </p>
+
+                    <a href="{{ route('package_details', $p->id) }}"
+                       class="btn btn-primary btn-sm">
+                        View Package
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    @empty
+        <p class="text-center">No packages available</p>
+    @endforelse
+
+</div> --}}
+
   
   <div class="untree_co-section">
     <div class="container">
       <div class="row">
         <div class="col-6 col-md-6 col-lg-3">
           <div class="media-1">
-            <a href="#" class="d-block mb-3"><img src="assets/images/hero-slider-1.jpg" alt="Image" class="img-fluid"></a>
+            <a href="{{ url('package') }}" class="d-block mb-3"><img src="assets/images/hero-slider-1.jpg" alt="Image" class="img-fluid"></a>
             <div class="d-flex">
               <div>
-                <h3><a href="#">Excellence in Travel</a></h3>
+                <h3><a href="{{ url('package') }}">Excellence in Travel</a></h3>
                 <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
               </div>
             </div>
@@ -33,10 +72,10 @@
         </div>
         <div class="col-6 col-md-6 col-lg-3">
           <div class="media-1">
-            <a href="#" class="d-block mb-3"><img src="assets/images/hero-slider-2.jpg" alt="Image" class="img-fluid"></a>
+            <a href="{{ url('package') }}" class="d-block mb-3"><img src="assets/images/hero-slider-2.jpg" alt="Image" class="img-fluid"></a>
             <div class="d-flex">
               <div>
-                <h3><a href="#">Discovering Best</a></h3>
+                <h3><a href="{{ url('package') }}">Discovering Best</a></h3>
                 <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
               </div>
             </div>
@@ -44,10 +83,10 @@
         </div>
         <div class="col-6 col-md-6 col-lg-3">
           <div class="media-1">
-            <a href="#" class="d-block mb-3"><img src="assets/images/hero-slider-3.jpg" alt="Image" class="img-fluid"></a>
+            <a href="{{ url('package') }}" class="d-block mb-3"><img src="assets/images/hero-slider-3.jpg" alt="Image" class="img-fluid"></a>
             <div class="d-flex">
               <div>
-                <h3><a href="#">A New Moments of Life</a></h3>
+                <h3><a href="{{ url('package') }}">A New Moments of Life</a></h3>
                 <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
               </div>
             </div>
@@ -55,10 +94,10 @@
         </div>
         <div class="col-6 col-md-6 col-lg-3">
           <div class="media-1">
-            <a href="#" class="d-block mb-3"><img src="assets/images/hero-slider-4.jpg" alt="Image" class="img-fluid"></a>
+            <a href="{{ url('package') }}" class="d-block mb-3"><img src="assets/images/hero-slider-4.jpg" alt="Image" class="img-fluid"></a>
             <div class="d-flex">
               <div>
-                <h3><a href="#">Joy To Your Journey</a></h3>
+                <h3><a href="{{ url('package') }}">Joy To Your Journey</a></h3>
                 <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
               </div>
             </div>

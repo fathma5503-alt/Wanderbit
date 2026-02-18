@@ -10,9 +10,10 @@ class Package extends Model
         'title', 
         'slug', 
         'price', 
+        'total_amount',
         'duration_days', 
         'featured_image', 
-        'other_images',  // Add this line
+        'other_images', 
         'category_id', 
         'description', 
         'is_active'

@@ -25,6 +25,10 @@
                 <label>Price ($)/Night</label>
                 <input type="number" name="price" step="0.01" class="form-control" required>
             </div>
+             <div class="col-md-6">
+                <label>Total ($)</label>
+                <input type="number" name="total_amount" step="0.01" class="form-control" required>
+            </div>
             <div class="col-md-6">
                 <label>Duration (Days)</label>
                 <input type="number" name="duration_days" class="form-control" required>

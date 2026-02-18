@@ -21,8 +21,9 @@
             {{-- DESKTOP MENU --}}
             <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right">
                 <li><a href="{{ url('/') }}">Home</a></li>
+                  <li><a href="{{ url('about') }}">About</a></li>
+                <li><a href="{{ url('blogs') }}">Blog</a></li>
                 <li><a href="{{ url('services') }}">Services</a></li>
-                <li><a href="{{ url('about') }}">About</a></li>
                 <li><a href="{{ url('contact') }}">Contact Us</a></li>
 
                 @auth

@@ -81,6 +81,31 @@
     .content.shrink {
         margin-left: 70px;
     }
+    /* Dropdown submenu */
+.submenu {
+    list-style: none;
+    padding-left: 50px;
+    display: none;
+    background: #2b3453;
+}
+
+.submenu li a {
+    padding: 10px 20px;
+    display: block;
+    font-size: 14px;
+    color: #c7cbe3;
+}
+
+.submenu li a:hover {
+    background: #3a4666;
+    color: white;
+}
+
+/* Hide submenu when sidebar collapsed */
+.sidebar.collapsed .submenu {
+    display: none !important;
+}
+
 </style>
 
 <div class="sidebar collapsed" id="sidebar">
@@ -96,19 +121,28 @@
         </a>
     </li>
 
-    <li>
-        <a href="{{ route('show_category') }}">
-            <span class="icon" data-lucide="layers"></span>
-            <span class="menu-text">Categories</span>
-        </a>
-    </li>
+  <li class="dropdown">
+    <a href="javascript:void(0);" onclick="toggleCategory()">
+        <span class="icon" data-lucide="map"></span>
+        <span class="menu-text">Packages</span>
+        <span class="menu-text" style="margin-left:auto;">▼</span>
+    </a>
 
-    <li>
-        <a href="{{ route('show_package') }}">
-            <span class="icon" data-lucide="map"></span>
-            <span class="menu-text">Packages</span>
-        </a>
-    </li>
+    <ul class="submenu" id="categorySubmenu">
+        <li>
+            <a href="{{ route('show_package') }}">
+                <span class="menu-text">All Packages</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('show_category') }}">
+                <span class="menu-text">Categories</span>
+            </a>
+        </li>
+        
+    </ul>
+</li>
+
 
     <li>
         <a href="{{ route('booking.index') }}">
@@ -116,6 +150,30 @@
             <span class="menu-text">Bookings</span>
         </a>
     </li>
+    <li>
+    <a href="{{ route('blogs.index') }}">
+        <span class="icon" data-lucide="file-text"></span>
+        <span class="menu-text">Blogs</span>
+    </a>
+</li>
+<li>
+    <a href="{{ route('testimonial.index') }}">
+        <span class="icon" data-lucide="message-square-quote"></span>
+        <span class="menu-text">Testimonials</span>
+    </a>
+</li>
+ <li>
+            <a href="{{ route('team.index') }}">
+                <span class="icon" data-lucide="users"></span>
+                <span class="menu-text">Team</span>
+            </a>
+        </li>
 </ul>
 
 </div>
+<script>
+function toggleCategory() {
+    var submenu = document.getElementById("categorySubmenu");
+    submenu.style.display = submenu.style.display === "block" ? "none" : "block";
+}
+</script>

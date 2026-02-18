@@ -10,18 +10,12 @@ use Carbon\Carbon;
 
 class BookingController extends Controller
 {
-    /**
-     * Show booking form
-     */
     public function create($package_id)
     {
         $package = Package::findOrFail($package_id);
         return view('booking.create', compact('package'));
     }
 
-    /**
-     * Store booking in database
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -33,14 +27,13 @@ class BookingController extends Controller
         ]);
 
         $package = Package::findOrFail($request->package_id);
-        
-        // Calculate duration and total price
+
         $checkIn = Carbon::parse($request->check_in_date);
         $checkOut = Carbon::parse($request->check_out_date);
-        $nights = $checkOut->diffInDays($checkIn);
+
+        $nights = $checkIn->diffInDays($checkOut);
         $totalPrice = $package->price * $request->guests * $nights;
 
-        // Create booking
         $booking = Booking::create([
             'booking_id' => Booking::generateBookingId(),
             'user_id' => Auth::id(),
@@ -58,9 +51,6 @@ class BookingController extends Controller
             ->with('success', 'Booking created successfully! Please proceed to payment.');
     }
 
-    /**
-     * Show single booking with details
-     */
     public function show($id)
     {
         $booking = Booking::with(['user', 'package'])->findOrFail($id);
@@ -69,21 +59,17 @@ class BookingController extends Controller
             abort(403);
         }
 
-        return view('admin.booking.show', compact('booking'));
+        return view('booking.show', compact('booking'));
     }
-    /**
-     * Show edit form
-     */
+
     public function edit($id)
     {
         $booking = Booking::findOrFail($id);
-        
-        // Only allow editing pending bookings
+
         if ($booking->status != 'pending') {
             return back()->with('error', 'Only pending bookings can be edited.');
         }
 
-        // Authorize user
         if ($booking->user_id != Auth::id()) {
             abort(403);
         }
@@ -91,19 +77,14 @@ class BookingController extends Controller
         return view('booking.edit', compact('booking'));
     }
 
-    /**
-     * Update booking
-     */
     public function update(Request $request, $id)
     {
         $booking = Booking::findOrFail($id);
 
-        // Only allow editing pending bookings
         if ($booking->status != 'pending') {
             return back()->with('error', 'Only pending bookings can be edited.');
         }
 
-        // Authorize user
         if ($booking->user_id != Auth::id()) {
             abort(403);
         }
@@ -115,11 +96,13 @@ class BookingController extends Controller
             'special_requests' => 'nullable|max:500',
         ]);
 
-        // Recalculate total price
+        $package = $booking->package;
+
         $checkIn = Carbon::parse($request->check_in_date);
         $checkOut = Carbon::parse($request->check_out_date);
-        $nights = $checkOut->diffInDays($checkIn);
-        $totalPrice = $booking->package->price * $request->guests * $nights;
+
+        $nights = $checkIn->diffInDays($checkOut);
+        $totalPrice = $package->price * $request->guests * $nights;
 
         $booking->update([
             'guests' => $request->guests,
@@ -133,19 +116,14 @@ class BookingController extends Controller
             ->with('success', 'Booking updated successfully!');
     }
 
-    /**
-     * Cancel booking
-     */
     public function cancel($id)
     {
         $booking = Booking::findOrFail($id);
 
-        // Authorize user
         if ($booking->user_id != Auth::id() && !Auth::user()->is_admin) {
             abort(403);
         }
 
-        // Only allow cancelling pending or confirmed bookings
         if (!in_array($booking->status, ['pending', 'confirmed'])) {
             return back()->with('error', 'This booking cannot be cancelled.');
         }
@@ -158,27 +136,25 @@ class BookingController extends Controller
         return back()->with('success', 'Booking cancelled successfully!');
     }
 
-    /**
-     * Show user's all bookings
-     */
     public function myBookings()
     {
-        $bookings = Auth::user()->bookings()->with('package')->latest()->paginate(10);
+        $bookings = Auth::user()->bookings()
+            ->with('package')
+            ->latest()
+            ->paginate(10);
+
         return view('booking.my_bookings', compact('bookings'));
     }
 
-    /**
-     * Admin: Show all bookings
-     */
     public function index()
     {
-        $bookings = Booking::with(['user', 'package'])->latest()->paginate(15);
+        $bookings = Booking::with(['user', 'package'])
+            ->latest()
+            ->paginate(15);
+
         return view('admin.booking.index', compact('bookings'));
     }
 
-    /**
-     * Admin: Update booking status
-     */
     public function updateStatus(Request $request, $id)
     {
         $booking = Booking::findOrFail($id);
@@ -196,9 +172,6 @@ class BookingController extends Controller
         return back()->with('success', 'Booking status updated!');
     }
 
-    /**
-     * Admin: Delete booking
-     */
     public function destroy($id)
     {
         $booking = Booking::findOrFail($id);

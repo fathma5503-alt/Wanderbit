@@ -10,6 +10,15 @@
     width: 700px;
     border-radius: 10px;
 }
+#pieChart{
+    height: 300px !important;
+    width: 300px !important;
+}
+/* .blog-table {
+    width: 82%;
+    border-collapse: collapse;
+    table-layout: fixed; 
+} */
  body {
     background-color: #ffffff !important;
     margin: 0;
@@ -123,11 +132,51 @@ table {
 .table tbody {
     display: table-row-group !important;
 }
+table.blog-table {
+    position: static;
+    /* width: 82%; */
+    border-collapse: collapse;
+    table-layout: fixed !important;
+}
+.blog-table tbody, td, tfoot, th, thead, tr {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+       /* vertical-align: middle; */
+    /* border: 1px solid #1a374d; */
+    word-wrap: break-word;
+    /* display: table-cell; */
+    /* text-align: center; */
+    padding: 20px;
+}
+.btn-group-sm>.btn, .btn-sm {
+    --bs-btn-padding-y: 0.25rem;
+    --bs-btn-padding-x: 0.5rem;
+    --bs-btn-font-size: 0.875rem;
+    --bs-btn-border-radius: var(--bs-border-radius-sm);
+    width: 100px;
+}
+textarea.form-control {
+    width: 700px;
+}
+[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+    cursor: pointer;
+    width: 100px;
+    padding: 5px;
+    border-radius: 20px;
+}
 
 .table tr {
     display: table-row !important;
 }
-
+.btn-group-sm>.btn, .btn-sm {
+    --bs-btn-padding-y: 0.25rem;
+    --bs-btn-padding-x: 0.5rem;
+    --bs-btn-font-size: 0.875rem;
+    --bs-btn-border-radius: var(--bs-border-radius-sm);
+    width: 100px;
+    border-radius: 20px;
+}
 .table th,
 .table td {
     padding:  10px;
@@ -239,6 +288,32 @@ function deleteImage(button, index) {
     button.disabled = true;
 }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@yield('scripts')
+<script src="https://cdn.tiny.cloud/1/zmgm8gtvjcd2gmll4jrdhbwxhm7e5d2f5lheuvsx37ovyn76/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
+<script>
+tinymce.init({
+    selector: '#content',
+    height: 400,
+    plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount',
+    toolbar: 'undo redo | blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+    menubar: false,
+    branding: false
+});
+</script>
+<script>
+document.getElementById('title').addEventListener('input', function() {
+    const title = this.value;
+    const slug = title
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, '')   // remove invalid chars
+        .replace(/\s+/g, '-')            // replace spaces with hyphens
+        .replace(/-+/g, '-');            // collapse multiple hyphens
+
+    document.getElementById('slug').value = slug;
+});
+</script>
 </body>
 </html>

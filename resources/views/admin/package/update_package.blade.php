@@ -13,10 +13,7 @@
         </div>
     @endif
 
-<form id="packageUpdateForm"
-      action="{{ route('package.update', $package->id) }}"
-      method="POST"
-      enctype="multipart/form-data">
+<form id="packageUpdateForm" action="{{ route('package.update', $package->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')  
 
@@ -29,6 +26,10 @@
             <div class="col-md-6">
                 <label>Price ($)/Night</label>
                 <input type="number" name="price" step="0.01" class="form-control" value="{{ old('price', $package->price) }}" required>
+            </div>
+               <div class="col-md-6">
+                <label>Total ($)</label>
+                <input type="number" name="total_amount" step="0.01" class="form-control" value="{{ old('total_amount', $package->total_amount) }}" required>
             </div>
             <div class="col-md-6">
                 <label>Duration (Days)</label>
