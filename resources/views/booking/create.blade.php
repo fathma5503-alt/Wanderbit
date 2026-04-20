@@ -45,6 +45,7 @@
                         @csrf
 
                         <input type="hidden" name="package_id" value="{{ $package->id }}">
+                        <input type="hidden" name="total_price" id="total_price_input" value="0">
 
                         <!-- Guests -->
                         <div class="mb-3">
@@ -97,9 +98,7 @@
 
                         <!-- Special Requests -->
                         <div class="mb-3">
-                            <label class="form-label">
-                                Special Requests (Optional)
-                            </label>
+                            <label class="form-label">Special Requests (Optional)</label>
                             <textarea id="special_requests"
                                       name="special_requests"
                                       rows="4"
@@ -116,12 +115,9 @@
                                 <h6>Price Breakdown</h6>
 
                                 <div class="row">
-                                    <div class="col-6">Package Price:</div>
+                                    <div class="col-6">Package Price/Night:</div>
                                     <div class="col-6 text-end">
-                                        ₹<span id="packagePrice"
-                                                data-duration="{{ $package->duration_days }}">
-                                                {{ $package->price }}
-                                           </span>
+                                        ₹{{ number_format($package->price, 2) }}
                                     </div>
                                 </div>
 
@@ -142,39 +138,73 @@
                                 <hr>
 
                                 <div class="row">
-                                    <div class="col-6">
-                                        <strong>Total Price:</strong>
-                                    </div>
+                                    <div class="col-6"><strong>Total Price:</strong></div>
                                     <div class="col-6 text-end">
-                                        <strong>
-                                            ₹<span id="totalPrice">0.00</span>
-                                        </strong>
+                                        <strong>₹<span id="totalPrice">0.00</span></strong>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Buttons -->
-                        <button type="submit"
-                                class="btn btn-primary btn-lg w-100">
+                        <button type="submit" class="btn btn-primary btn-lg w-100">
                             Proceed to Payment
                         </button>
 
-                        <a href="{{ route('package') }}"
-                           class="btn btn-secondary w-100 mt-2">
+                        <a href="{{ route('package') }}" class="btn btn-secondary w-100 mt-2">
                             Back to Packages
                         </a>
 
                     </form>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
-
 @include('layout.footer')
-
 @include('layout.script')
+
+<script>
+    const pricePerNight = parseFloat("{{ $package->price }}");
+    const duration      = {{ $package->duration_days }};
+
+    function updateCheckout() {
+        const checkIn = document.getElementById('check_in_date').value;
+        if (checkIn) {
+            const checkInDate  = new Date(checkIn);
+            const checkOutDate = new Date(checkInDate);
+            checkOutDate.setDate(checkOutDate.getDate() + duration);
+
+            // Auto-set checkout date
+            const formatted = checkOutDate.toISOString().split('T')[0];
+            document.getElementById('check_out_date').value = formatted;
+
+            // Set nights
+            document.getElementById('nightCount').textContent = duration;
+
+            calculateTotal();
+        }
+    }
+
+    function calculateTotal() {
+        const nights = parseInt(document.getElementById('nightCount').textContent) || 0;
+        const guests = parseInt(document.getElementById('guests').value) || 1;
+
+        document.getElementById('guestCount').textContent = guests;
+
+        const total = pricePerNight * guests * nights;
+
+        // Save raw value to hidden input for form submission
+        document.getElementById('total_price_input').value = total.toFixed(2);
+
+        // Display with Indian formatting (e.g. ₹2,24,955.00)
+        document.getElementById('totalPrice').textContent = total.toLocaleString('en-IN', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
+
+    document.getElementById('check_in_date').addEventListener('change', updateCheckout);
+    document.getElementById('guests').addEventListener('input', calculateTotal);
+</script>

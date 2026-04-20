@@ -30,10 +30,10 @@
 
    <h4 class="d2"> <div>{{ $package ->description }}</div>
     <br>
-    <div>₹{{ $package ->price }} PerNight</div>
+    <div>₹{{ number_format($package->price, 2) }} Per Night</div>
 <br>
    <br>
-    <div>₹{{ $package ->total_amount }} Total</div>
+<div>₹{{ number_format($package->price * $package->duration_days, 2) }} Total</div> 
 <br>
     <div>{{ $package  ->duration_days }} Days</div>
 <br>

@@ -97,9 +97,59 @@
                     </table>
                 </div>
 
-                <div class="d-flex justify-content-center mt-4">
-                    {{ $bookings->links() }}
-                </div>
+                {{-- Custom Pagination --}}
+                @if($bookings->hasPages())
+                    <div style="display:flex; justify-content:center; margin-top:20px;">
+                        <ul style="display:flex; flex-direction:row; list-style:none; gap:8px; padding:0; margin:0; align-items:center;">
+
+                            {{-- Previous Button --}}
+                            @if($bookings->onFirstPage())
+                                <li>
+                                    <span style="padding:8px 16px; border-radius:6px; border:1px solid #555; color:#888; background:linear-gradient(135deg,#1E1E1E,#2A2A2A,#0B6E4F); cursor:not-allowed; display:inline-block;">
+                                        &laquo; Prev
+                                    </span>
+                                </li>
+                            @else
+                                <li>
+                                    <a href="{{ $bookings->previousPageUrl() }}" style="padding:8px 16px; border-radius:6px; border:1px solid #d4af37; color:#d4af37; background:linear-gradient(135deg,#1E1E1E,#2A2A2A,#0B6E4F); text-decoration:none; display:inline-block;">
+                                        &laquo; Prev
+                                    </a>
+                                </li>
+                            @endif
+
+                            {{-- Page Numbers --}}
+                            @foreach($bookings->getUrlRange(1, $bookings->lastPage()) as $page => $url)
+                                <li>
+                                    @if($page == $bookings->currentPage())
+                                        <span style="padding:8px 16px; border-radius:6px; border:1px solid #d4af37; color:#000; background:#d4af37; font-weight:600; display:inline-block;">
+                                            {{ $page }}
+                                        </span>
+                                    @else
+                                        <a href="{{ $url }}" style="padding:8px 16px; border-radius:6px; border:1px solid #d4af37; color:#d4af37; background:linear-gradient(135deg,#1E1E1E,#2A2A2A,#0B6E4F); text-decoration:none; display:inline-block;">
+                                            {{ $page }}
+                                        </a>
+                                    @endif
+                                </li>
+                            @endforeach
+
+                            {{-- Next Button --}}
+                            @if($bookings->hasMorePages())
+                                <li>
+                                    <a href="{{ $bookings->nextPageUrl() }}" style="padding:8px 16px; border-radius:6px; border:1px solid #d4af37; color:#d4af37; background:linear-gradient(135deg,#1E1E1E,#2A2A2A,#0B6E4F); text-decoration:none; display:inline-block;">
+                                        Next &raquo;
+                                    </a>
+                                </li>
+                            @else
+                                <li>
+                                    <span style="padding:8px 16px; border-radius:6px; border:1px solid #555; color:#888; background:linear-gradient(135deg,#1E1E1E,#2A2A2A,#0B6E4F); cursor:not-allowed; display:inline-block;">
+                                        Next &raquo;
+                                    </span>
+                                </li>
+                            @endif
+
+                        </ul>
+                    </div>
+                @endif
 
             @else
                 <div class="alert alert-info text-center">

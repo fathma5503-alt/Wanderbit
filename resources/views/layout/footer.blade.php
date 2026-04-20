@@ -5,8 +5,11 @@
 				<div class="row">
 					<div class="col-md-6 col-lg-4">
 						<div class="widget">
-							<h3 class="heading">About Tour</h3>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+							{{-- <h3 class="heading">About Tour</h3> --}}
+							<a href="{{ url('/') }}" class="logo m-0">
+                WanderBit <span class="text">.</span>
+            </a>
+							<p>Discover the world your way. WanderBit brings you curated travel packages, expert guidance, and memories that last a lifetime.</p>
 						</div>
 						<div class="widget">
 							<ul class="list-unstyled social">
@@ -25,9 +28,9 @@
 						<div class="widget">
 							<h3 class="heading">Pages</h3>
 							<ul class="links list-unstyled">
+                				<li><a href="{{ url('/') }}">Home</a></li>
 								<li><a href="{{ url('package') }}">Packages</a></li>
 								<li><a href="{{ url('my_bookings') }}">MyBookings</a></li>
-								<li><a href="#">Contact</a></li>
 							</ul>
 						</div>
 					</div>
@@ -37,6 +40,7 @@
 							<ul class="links list-unstyled">
 								<li><a href="{{ url('about') }}">About</a></li>
 								<li><a href="{{ url('services') }}">Services</a></li>
+                				<li><a href="{{ url('blogs') }}">Blog</a></li>
 								<li><a href="{{ url('contact') }}">Contact</a></li>
 							</ul>
 						</div>

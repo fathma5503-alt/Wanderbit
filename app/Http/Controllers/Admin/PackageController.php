@@ -23,7 +23,6 @@ class PackageController extends Controller
         $validated = $request->validate([
             'title' => 'required|max:255',
             'price' => 'required|numeric|min:0',
-            'total_amount' => 'required|numeric|min:0',
             'duration_days' => 'required|integer|min:1',
             'featured_image' => 'required|image|mimes:jpg,jpeg,png,webp|max:20480',
             'other_images' => 'nullable|array',
@@ -36,6 +35,7 @@ class PackageController extends Controller
         $package->fill($validated);
         $package->slug = Str::slug($request->title);
         $package->is_active = $request->has('is_active');
+        $package->total_amount = $request->price * $request->duration_days;
 
         /* Featured image */
         if ($request->hasFile('featured_image')) {
@@ -78,7 +78,6 @@ class PackageController extends Controller
         $validated = $request->validate([
             'title' => 'required|max:255',
             'price' => 'required|numeric|min:0',
-            'total_amount' => 'required|numeric|min:0',
             'duration_days' => 'required|integer|min:1',
             'featured_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
             'other_images' => 'nullable|array',
@@ -118,7 +117,7 @@ class PackageController extends Controller
             'title' => $request->title,
             'slug' => Str::slug($request->title),
             'price' => $request->price,
-            'total_amount' => $request->total_amount,
+            'total_amount' => $request->price * $request->duration_days,
             'duration_days' => $request->duration_days,
             'category_id' => $request->category_id,
             'description' => $request->description,

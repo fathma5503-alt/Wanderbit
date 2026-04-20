@@ -10,22 +10,27 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index(Request $request)
-    {
-        // Fetch categories
-        $categories = Category::orderBy('name')->get();
+   public function index(Request $request)
+{
+    // Fetch categories
+    $categories = Category::orderBy('name')->get();
 
-        // Fetch packages
-        $packages = Package::with('category')
-            ->where('is_active', true)
-            ->when($request->category, function ($query) use ($request) {
-                $query->where('category_id', $request->category);
-            })
-            ->latest()
-            ->get();
+    // Fetch packages
+    $packages = Package::with('category')
+        ->where('is_active', true)
+        ->when($request->category, function ($query) use ($request) {
+            $query->where('category_id', $request->category);
+        })
+        ->latest()
+        ->get();
 
-        return view('index', compact('packages', 'categories'));
-    }
+    // Fetch a random featured package for the video section
+    $featuredPackage = Package::where('is_active', true)
+        ->inRandomOrder()
+        ->first();
+
+    return view('index', compact('packages', 'categories', 'featuredPackage'));
+}
 
    
     public function about()
@@ -33,7 +38,12 @@ class HomeController extends Controller
         $testimonials = Testimonials::latest()->get();
          $teams = Team::latest()->get();
 
-        return view('about', compact('testimonials','teams'));
+          // Fetch a random featured package for the video section
+    $featuredPackage = Package::where('is_active', true)
+        ->inRandomOrder()
+        ->first();
+
+        return view('about', compact('testimonials','teams','featuredPackage'));
     }
       public function contact()
     {

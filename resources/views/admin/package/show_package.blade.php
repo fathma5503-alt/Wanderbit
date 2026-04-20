@@ -36,15 +36,15 @@
             <td>
                 {{$p->slug}}
             </td>    
-            <td>
-                {{$p->price}}
-            </td>  
-            <td>
-                {{$p->total_amount}}
-            </td>  
-            <td>
-                {{$p->duration_days}}
-            </td> 
+           <td>
+    {{number_format($p->price,2)}}
+</td>  
+<td>
+    {{ number_format($p->price * $p->duration_days, 2) }}
+</td>  
+<td>
+    {{$p->duration_days}}
+</td>
             <td>
                 @if($p->featured_image)
                     <img 

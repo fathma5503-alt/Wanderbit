@@ -24,7 +24,7 @@
                     <div class="alert alert-info mb-4">
                         <h6 class="mb-2">Current Booking Details</h6>
                         <p class="mb-1"><strong>Package:</strong> {{ $booking->package->title }}</p>
-                        <p class="mb-0"><strong>Status:</strong> 
+                        <p class="mb-0"><strong>Status:</strong>
                             <span class="badge bg-info">{{ ucfirst($booking->status) }}</span>
                         </p>
                     </div>
@@ -33,10 +33,13 @@
                         @csrf
                         @method('PUT')
 
+                        <input type="hidden" name="total_price" id="total_price_input" value="{{ $booking->total_price }}">
+
                         <div class="mb-3">
                             <label for="guests" class="form-label">Number of Guests</label>
-                            <input type="number" class="form-control @error('guests') is-invalid @enderror" 
-                                   id="guests" name="guests" min="1" 
+                            <input type="number"
+                                   class="form-control @error('guests') is-invalid @enderror"
+                                   id="guests" name="guests" min="1"
                                    value="{{ old('guests', $booking->guests) }}" required>
                             @error('guests')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -46,11 +49,14 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="check_in_date" class="form-label">Check-in Date</label>
-                                    <input type="date" class="form-control @error('check_in_date') is-invalid @enderror" 
-                                           id="check_in_date" name="check_in_date" 
+                                    <label class="form-label">Check-in Date</label>
+                                    <input type="date"
+                                           id="check_in_date"
+                                           name="check_in_date"
+                                           class="form-control @error('check_in_date') is-invalid @enderror"
                                            min="{{ now()->format('Y-m-d') }}"
-                                           value="{{ old('check_in_date', $booking->check_in_date->format('Y-m-d')) }}" required>
+                                           value="{{ old('check_in_date', $booking->check_in_date) }}"
+                                           required>
                                     @error('check_in_date')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -59,10 +65,13 @@
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="check_out_date" class="form-label">Check-out Date</label>
-                                    <input type="date" class="form-control @error('check_out_date') is-invalid @enderror" 
-                                           id="check_out_date" name="check_out_date" 
-                                           value="{{ old('check_out_date', $booking->check_out_date->format('Y-m-d')) }}" required>
+                                    <label class="form-label">Check-out Date</label>
+                                    <input type="date"
+                                           id="check_out_date"
+                                           name="check_out_date"
+                                           class="form-control @error('check_out_date') is-invalid @enderror"
+                                           value="{{ old('check_out_date', $booking->check_out_date) }}"
+                                           readonly required>
                                     @error('check_out_date')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -72,7 +81,7 @@
 
                         <div class="mb-3">
                             <label for="special_requests" class="form-label">Special Requests (Optional)</label>
-                            <textarea class="form-control @error('special_requests') is-invalid @enderror" 
+                            <textarea class="form-control @error('special_requests') is-invalid @enderror"
                                       id="special_requests" name="special_requests" rows="4"
                                       placeholder="Any special requests? Let us know...">{{ old('special_requests', $booking->special_requests) }}</textarea>
                             @error('special_requests')
@@ -80,13 +89,13 @@
                             @enderror
                         </div>
 
-                        <!-- Updated Price Calculation -->
+                        <!-- Price Breakdown -->
                         <div class="card bg-light mb-3">
                             <div class="card-body">
                                 <h6>Updated Price Breakdown</h6>
                                 <div class="row">
-                                    <div class="col-6">Package Price:</div>
-                                    <div class="col-6 text-end">₹<span id="packagePrice">{{ $booking->package->price }}</span></div>
+                                    <div class="col-6">Package Price/Night:</div>
+                                    <div class="col-6 text-end">₹{{ number_format($booking->package->price, 2) }}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6">Guests:</div>
@@ -94,12 +103,14 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-6">Nights:</div>
-                                    <div class="col-6 text-end"><span id="nightCount">0</span></div>
+                                    <div class="col-6 text-end"><span id="nightCount">{{ $booking->package->duration_days }}</span></div>
                                 </div>
                                 <hr>
                                 <div class="row">
                                     <div class="col-6"><strong>New Total Price:</strong></div>
-                                    <div class="col-6 text-end"><strong>₹<span id="totalPrice">{{ $booking->total_price }}</span></strong></div>
+                                    <div class="col-6 text-end">
+                                        <strong>₹<span id="totalPrice">{{ number_format($booking->total_price, 2) }}</span></strong>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -118,38 +129,57 @@
     </div>
 </div>
 
+@include('layout.footer')
+@include('layout.script')
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const guestsInput = document.getElementById('guests');
-    const checkInInput = document.getElementById('check_in_date');
-    const checkOutInput = document.getElementById('check_out_date');
-    const packagePrice = parseFloat(document.getElementById('packagePrice').textContent);
+    // Raw values from PHP — no comma parsing issues
+    const pricePerNight = parseFloat("{{ $booking->package->price }}");
+    const duration      = {{ $booking->package->duration_days }};
+
+    function updateCheckout() {
+        const checkIn = document.getElementById('check_in_date').value;
+        if (checkIn) {
+            const checkInDate  = new Date(checkIn);
+            const checkOutDate = new Date(checkInDate);
+            checkOutDate.setDate(checkOutDate.getDate() + duration);
+
+            // Auto-set checkout date
+            document.getElementById('check_out_date').value = checkOutDate.toISOString().split('T')[0];
+
+            // Always use package duration for nights
+            document.getElementById('nightCount').textContent = duration;
+
+            calculateTotal();
+        }
+    }
 
     function calculateTotal() {
-        const guests = parseInt(guestsInput.value) || 1;
-        const checkIn = new Date(checkInInput.value);
-        const checkOut = new Date(checkOutInput.value);
-        
-        let nights = 0;
-        if (checkInInput.value && checkOutInput.value) {
-            nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
-            nights = nights > 0 ? nights : 0;
-        }
+        const guests = parseInt(document.getElementById('guests').value) || 1;
+        const nights = duration;
 
-        const total = packagePrice * guests * nights;
+        const total = pricePerNight * guests * nights;
 
         document.getElementById('guestCount').textContent = guests;
         document.getElementById('nightCount').textContent = nights;
-        document.getElementById('totalPrice').textContent = total.toFixed(2);
+
+        // Indian number formatting
+        document.getElementById('totalPrice').textContent = total.toLocaleString('en-IN', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+        // Save raw value for form submission
+        document.getElementById('total_price_input').value = total.toFixed(2);
     }
 
-    guestsInput.addEventListener('change', calculateTotal);
-    checkInInput.addEventListener('change', calculateTotal);
-    checkOutInput.addEventListener('change', calculateTotal);
+    document.getElementById('check_in_date').addEventListener('change', updateCheckout);
+    document.getElementById('guests').addEventListener('input', calculateTotal);
 
-    // Initial calculation
-    calculateTotal();
-});
+    // Run on page load to pre-fill checkout if check-in already has a value
+    window.addEventListener('DOMContentLoaded', function () {
+        if (document.getElementById('check_in_date').value) {
+            updateCheckout();
+        }
+    });
 </script>
-@include('layout.footer')
-@include('layout.script')
