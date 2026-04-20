@@ -115,7 +115,52 @@ const durationDays = {{ isset($package) ? $package->duration_days : 0 }};
 });
 </script>
 
+@isset($packages)
+<script>
+    const packageImages = [
+        @foreach($packages as $p)
+            @if($p->featured_image)
+                "{{ asset('public/storage/'.$p->featured_image) }}",
+            @endif
+        @endforeach
+    ];
 
+    if (packageImages.length > 1) {
+        let current = 0;
+        const slider = document.getElementById('serviceSlider');
+
+        if (slider) {
+            slider.style.transition = 'opacity 0.4s ease-in-out';
+
+            setInterval(function () {
+                current = (current + 1) % packageImages.length;
+                slider.style.opacity = '0';
+
+                setTimeout(function () {
+                    slider.style.backgroundImage = `url('${packageImages[current]}')`;
+                    slider.style.opacity = '1';
+                }, 400);
+
+            }, 3000);
+        }
+    }
+</script>
+@endisset
+
+<script>
+    // Custom fancybox size
+    $('[data-fancybox="gallery"]').fancybox({
+        width: 900,
+        height: 600,
+        fitToView: false,
+        aspectRatio: true,
+        helpers: {
+            overlay: {
+                locked: false
+            }
+        }
+    });
+</script>
 </body>
 
 </html>

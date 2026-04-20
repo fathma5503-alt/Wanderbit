@@ -79,9 +79,9 @@ class PackageController extends Controller
             'title' => 'required|max:255',
             'price' => 'required|numeric|min:0',
             'duration_days' => 'required|integer|min:1',
-            'featured_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'featured_image' => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'other_images' => 'nullable|array',
-            'other_images.*' => 'image|mimes:jpg,jpeg,png,webp|max:4096',
+            'other_images.*' => 'image|mimes:jpg,jpeg,png,webp',
             'category_id' => 'required|exists:categories,id',
             'description' => 'required',
         ]);

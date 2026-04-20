@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="col-lg-5 pl-lg-5 ml-auto">
-          <h2 class="section-title mb-4">About Tours</h2>
+          <h2 class="section-title mb-4">About WanderBit <span class="text">.</span></h2>
           <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
           <ul class="list-unstyled two-col clearfix">
             <li>Outdoor recreation activities</li>
@@ -208,7 +208,7 @@
             </div>
 
             <div class="col-lg-5">
-                <h2 class="section-title text-left mb-4">Take a look at Tour Video</h2>
+                <h2 class="section-title text-left mb-4">Take a look at our Video</h2>
 
                 @if(isset($featuredPackage))
                     <p>{{ Str::limit($featuredPackage->description, 150) }}</p>

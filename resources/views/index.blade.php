@@ -39,11 +39,11 @@
         </div>
 				<div class="col-lg-5">
 					<div class="slides">
-						<img src="assets/images/australia.jpg" alt="Image" class="img-fluid active" style="width: 475px;height:650px;">
-						<img src="assets/images/greece.jpg" alt="Image" class="img-fluid" style="width: 475px;height:650px;">
-						<img src="assets/images/greece4.jpg" alt="Image" class="img-fluid" style="width: 475px;height:650px;">
-						<img src="assets/images/japan.jpg" alt="Image" class="img-fluid" style="width: 475px;height:650px;">
-						<img src="assets/images/korea2.jpg" alt="Image" class="img-fluid" style="width: 475px;height:650px;">
+						<img src="assets/images/australia.jpg" alt="Image" class="img-fluid active imagban" >
+						<img src="assets/images/greece.jpg" alt="Image" class="img-fluid imagban" >
+						<img src="assets/images/greece4.jpg" alt="Image" class="img-fluid imagban" >
+						<img src="assets/images/japan.jpg" alt="Image" class="img-fluid imagban" >
+						<img src="assets/images/korea2.jpg" alt="Image" class="img-fluid imagban" >
 					</div>
 				</div>
 			</div>
@@ -103,61 +103,72 @@
 
 
 	<div class="untree_co-section">
-		<div class="container">
-			<div class="row mb-5 justify-content-center">
-				<div class="col-lg-6 text-center">
-					<h2 class="section-title text-center mb-3">Our Services</h2>
-					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-				</div>
-			</div>
-			<div class="row align-items-stretch">
-				<div class="col-lg-4 order-lg-1">
-					<div class="h-100"><div class="frame h-100"><div class="feature-img-bg h-100" style="background-image: url('assets/images/hero-slider-1.jpg');"></div></div></div>
-				</div>
+    <div class="container">
+        <div class="row mb-5 justify-content-center">
+            <div class="col-lg-6 text-center">
+                <h2 class="section-title text-center mb-3">Our Services</h2>
+                <p>Discover the world your way. WanderBit brings you curated travel packages, expert guidance, and memories that last a lifetime.</p>
+            </div>
+        </div>
+        <div class="row align-items-stretch">
 
-				<div class="col-6 col-sm-6 col-lg-4 feature-1-wrap d-md-flex flex-md-column order-lg-1" >
+            {{-- SLIDING IMAGE --}}
+            <div class="col-lg-4 order-lg-1">
+                <div class="h-100">
+                    <div class="frame h-100">
+                        <div id="serviceSlider" class="feature-img-bg h-100" 
+                             style="background-size: cover; 
+                                    background-position: center; 
+                                    background-image: url('{{ $packages->isNotEmpty() && $packages->first()->featured_image ? asset('public/storage/'.$packages->first()->featured_image) : 'assets/images/hero-slider-1.jpg' }}');
+                                    border-radius: 20px;
+                                    transition: background-image 0.8s ease-in-out;
+                                    min-height: 400px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-					<div class="feature-1 d-md-flex">
-						<div class="align-self-center">
-							<span class="flaticon-house display-4 text-primary"></span>
-							<h3>Beautiful Condo</h3>
-							<p class="mb-0">Even the all-powerful Pointing has no control about the blind texts.</p>
-						</div>
-					</div>
+            {{-- LEFT FEATURES --}}
+            <div class="col-6 col-sm-6 col-lg-4 feature-1-wrap d-md-flex flex-md-column order-lg-1">
+                <div class="feature-1 d-md-flex">
+                    <div class="align-self-center">
+                        <span class="flaticon-house display-4 text-primary"></span>
+                        <h3>Handpicked Destinations</h3>
+                        <p class="mb-0">We carefully select the world's most breathtaking destinations — from tropical beaches to mountain retreats — so every trip feels like a dream.</p>
+                    </div>
+                </div>
 
-					<div class="feature-1 ">
-						<div class="align-self-center">
-							<span class="flaticon-restaurant display-4 text-primary"></span>
-							<h3>Restaurants & Cafe</h3>
-							<p class="mb-0">Even the all-powerful Pointing has no control about the blind texts.</p>
-						</div>
-					</div>
+                <div class="feature-1">
+                    <div class="align-self-center">
+                        <span class="flaticon-restaurant display-4 text-primary"></span>
+                        <h3>Local Dining Experiences</h3>
+                        <p class="mb-0">Taste the world through its food. We connect you with authentic local restaurants and hidden culinary gems at every destination.</p>
+                    </div>
+                </div>
+            </div>
 
-				</div>
+            {{-- RIGHT FEATURES --}}
+            <div class="col-6 col-sm-6 col-lg-4 feature-1-wrap d-md-flex flex-md-column order-lg-3">
+                <div class="feature-1 d-md-flex">
+                    <div class="align-self-center">
+                        <span class="flaticon-mail display-4 text-primary"></span>
+                        <h3>Easy Booking</h3>
+                        <p class="mb-0">Book your perfect holiday in just a few clicks. Our seamless booking system keeps everything simple, fast, and hassle-free.</p>
+                    </div>
+                </div>
 
-				<div class="col-6 col-sm-6 col-lg-4 feature-1-wrap d-md-flex flex-md-column order-lg-3" >
+                <div class="feature-1 d-md-flex">
+                    <div class="align-self-center">
+                        <span class="flaticon-phone-call display-4 text-primary"></span>
+                        <h3>24/7 Travel Support</h3>
+                        <p class="mb-0">Wherever you are in the world, our dedicated support team is always just a call away — ready to help at any hour, any day.</p>
+                    </div>
+                </div>
+            </div>
 
-					<div class="feature-1 d-md-flex">
-						<div class="align-self-center">
-							<span class="flaticon-mail display-4 text-primary"></span>
-							<h3>Easy to Connect</h3>
-							<p class="mb-0">Even the all-powerful Pointing has no control about the blind texts.</p>
-						</div>
-					</div>
-
-					<div class="feature-1 d-md-flex">
-						<div class="align-self-center">
-							<span class="flaticon-phone-call display-4 text-primary"></span>
-							<h3>24/7 Support</h3>
-							<p class="mb-0">Even the all-powerful Pointing has no control about the blind texts.</p>
-						</div>
-					</div>
-
-				</div>
-
-			</div>
-		</div>
-	</div>
+        </div>
+    </div>
+</div>
 
 	<div class="untree_co-section count-numbers py-5">
 		<div class="container">

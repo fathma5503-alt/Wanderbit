@@ -810,7 +810,62 @@ footer a {
 span.text {
     color: #d4af37;
 }
+.div-im2 {
+    display: flex;
+    flex-direction: column;
+}
+img.img-fluid.imagban
+ {
+    height: 609px;
+    width: 446px;
+}
+@media (max-width: 991.98px) {
+    .hero .slides {
+        border-radius: 15px !important;
+        height: 250px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        left: 0 !important;
+        margin-bottom: 20px !important;
+        overflow: hidden !important;
+        position: relative !important;
+        display: block !important;  /* kills the flex row */
+    }
 
+    .hero .slides img {
+        border-radius: 15px !important;
+        width: 100% !important;
+        height: 250px !important;
+        object-fit: cover !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+    }
+
+    .hero .slides img.active {
+        z-index: 1 !important;
+        opacity: 1 !important;
+    }
+
+    .hero {
+        padding: 4rem 0 5rem 0 !important;
+        margin-bottom: 20px !important;
+    }
+
+    .hero h1 {
+        font-size: 28px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero .slides {
+        height: 200px !important;
+    }
+
+    .hero .slides img {
+        height: 200px !important;
+    }
+}
 </style>
 	<title></title>
 </head>
